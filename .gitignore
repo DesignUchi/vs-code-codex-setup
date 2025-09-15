@@ -1,0 +1,51 @@
+# OS
+.DS_Store
+Thumbs.db
+
+# Node
+node_modules/
+.npm/
+.pnpm-store/
+.yarn/
+yarn-error.log
+dist/
+build/
+.next/
+.out/
+.astro/
+
+# Python
+.venv/
+venv/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.pytest_cache/
+.mypy_cache/
+.coverage
+htmlcov/
+
+# Env & secrets
+.env
+.env.*
+!.env.example
+.direnv/
+
+# Logs & temp
+logs/
+*.log
+.tmp/
+.cache/
+
+# Editors
+# Keep .vscode if you want shared workspace settings; ignore user-specific files if needed
+# .vscode/
+.idea/
+.vscode/*.history
+
+# Mac
+Icon?
+
+# Misc
+coverage/

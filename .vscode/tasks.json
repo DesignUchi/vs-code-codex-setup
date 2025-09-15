@@ -1,0 +1,35 @@
+{
+  "version": "2.0.0",
+  "options": {
+    "cwd": "${workspaceFolder}"
+  },
+  "tasks": [
+    {
+      "label": "Lint",
+      "type": "shell",
+      "command": "direnv exec . make lint",
+      "presentation": {
+        "reveal": "always",
+        "panel": "dedicated"
+      }
+    },
+    {
+      "label": "Format",
+      "type": "shell",
+      "command": "direnv exec . make format",
+      "presentation": {
+        "reveal": "always",
+        "panel": "dedicated"
+      }
+    },
+    {
+      "label": "Smoke",
+      "type": "shell",
+      "command": "direnv exec . make smoke",
+      "presentation": {
+        "reveal": "always",
+        "panel": "dedicated"
+      }
+    }
+  ]
+}
