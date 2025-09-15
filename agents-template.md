@@ -5,6 +5,19 @@ When working interactively with an AI agent (e.g. Codex in VS Code), follow thes
 
 ---
 
+## 🔖 Agent Bootstrap Manifest
+
+This repository also includes a machine-readable configuration file:
+
+- File: **`agent_manifest.yml`** (repo root)  
+- Purpose: Defines stack type (Astro, WordPress, Python ETL, etc.), environment loader (`direnv`/`dotenv`), venv usage, dependencies, and default tasks.  
+- Agents should parse this file to auto-bootstrap the environment. Humans can read it as a compact reference for what setup steps apply.  
+
+> Example: if `stack.kind = python-etl` and `python.use_venv = true`, then create `.venv/` and run `make venv && make install`.  
+> If `stack.kind = astro`, run `npm install && npm run dev`.
+
+---
+
 ## 1. Use the Development Server (when available)
 
 - **Astro projects**:  
@@ -115,6 +128,7 @@ When working interactively with an AI agent (e.g. Codex in VS Code), follow thes
 ---
 
 ## 6. Useful Commands Recap
+> Tip: Run `make help` to list all available Makefile targets in this repository.
 
 | Project type       | Command / Action                  | Purpose                                         |
 | ------------------ | --------------------------------- | ----------------------------------------------- |

@@ -1,0 +1,29 @@
+# agent_manifest.yml
+project_name: <fill>
+stack:
+  # one of: astro | static | wordpress | evidence | python-etl
+  kind: <fill>
+env_loader:
+  # one of: none | dotenv | direnv
+  preferred: direnv
+python:
+  use_venv: true          # agent: create .venv
+  req_files:
+    - requirements.txt    # agent: install if present
+    - jobs/*/requirements.txt
+node:
+  use_node: true          # agent: run npm install if package.json exists
+quality:
+  lint: true              # agent: wire lint task for the chosen stack
+  format: true
+tasks:
+  # agent: create these as VS Code tasks if relevant
+  - name: dev
+    command: npm run dev
+  - name: install
+    command: make install
+  - name: drip
+    command: make drip
+notes:
+  - Keep secrets in .env.local (gitignored)
+  - If direnv is chosen, write .envrc: "dotenv .env.local"
