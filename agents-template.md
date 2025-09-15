@@ -1,6 +1,6 @@
 # AGENTS Guidelines for This Repository
 
-This repository may include different types of projects (static HTML/CSS, WordPress, Astro).  
+This repository may include different types of projects (static HTML/CSS, WordPress, Astro, Python ETL jobs).  
 When working interactively with an AI agent (e.g. Codex in VS Code), follow these guidelines to keep the development workflow fast, consistent, and reliable.
 
 ---
@@ -99,6 +99,7 @@ When working interactively with an AI agent (e.g. Codex in VS Code), follow thes
     ```bash
     dotenv .env.local
     # Add any exports or aliases here
+    export POSTGRES_DSN="$RENDER_PG_URL"
     ```
   - Run `direnv allow` to trust changes.  
 
@@ -110,6 +111,8 @@ When working interactively with an AI agent (e.g. Codex in VS Code), follow thes
     source .venv/bin/activate
     pip install -r requirements.txt
     ```
+
+---
 
 ## 6. Useful Commands Recap
 
@@ -124,12 +127,16 @@ When working interactively with an AI agent (e.g. Codex in VS Code), follow thes
 | Evidence           | `npm run dev`                     | Start Evidence dev server with HMR             |
 | Evidence           | `npm run build`                   | Build static production output (dashboards)    |
 | Evidence           | `npm run format` / `npm run lint` | Format or lint Svelte/JS/TS files              |
-| Svelte (future)    | *TBD*                             | Placeholder for future Svelte project commands |
+| Python ETL jobs    | `make venv && make install`       | Create venv and install all dependencies        |
+| Python ETL jobs    | `make drip` / `make stripe` / `make square` / `make ga` | Run ETL sync jobs with checkpoints |
+| Python ETL jobs    | `make webhook`                    | Run FastAPI webhook locally via Uvicorn         |
+| Python ETL jobs    | `make health`                     | Run healthcheck job                             |
+| Python ETL jobs    | `make check-env` / `make doctor`  | Validate env vars / check system tools          |
 | WordPress (PHP)    | `phpcs --standard=WordPress`      | Run WordPress coding standards check            |
 
 ---
 
-Following these practices ensures that both you and AI agents can work effectively across project types (Astro, static sites, WordPress) with minimal friction. When in doubt, prefer running the **dev server** over production builds and validate changes with **linting/formatting tools** before testing in the browser.
+Following these practices ensures that both you and AI agents can work effectively across project types (Astro, static sites, WordPress, Python ETL) with minimal friction. When in doubt, prefer running the **dev server** or **Makefile targets** over production builds and validate changes with **linting/formatting tools** before testing in the browser.
 
 ---
 
