@@ -12,12 +12,15 @@ This file tracks the state of the vs-code-codex-setup project. If copying these 
    - [x] make install (idempotent)
    - [x] make lint
    - [x] Format check (Prettier for Node, `make format` for Python)
-   - [ ] make check-env (ETL)
+   - [x] make check-env (optional; runs if target exists)
    - [x] make smoke or make doctor (via ci-smoke)
-   - [ ] Tests placeholder
+   - [x] Tests placeholder (optional; Node scripts.test or pytest if present)
 
 Summary:
-- Introduced a local CI runner (`make ci-local`) that chains install, lint, format-check, and a smoke/doctor step with fail-fast behavior. Added a matching VS Code task “CI (local)” and a pre-commit hook to run `make ci-local`. The format step auto-selects Prettier check for Node projects or `make format` for Python. A future enhancement is to add an optional `make check-env` for ETL projects and wire in tests when present.
+- Local CI runner (`make ci-local`) now chains: install → lint → format-check → optional env check → optional tests → smoke/doctor with fail-fast behavior.
+- Added VS Code task “CI (local)” and pre-commit hook to run `make ci-local`.
+- Format step auto-selects Prettier check for Node projects or `make format` for Python.
+- Env check runs if a `check-env` Make target exists; tests run if `npm test` is defined in `package.json` or `pytest` is available with a `tests/` directory.
 ## Notes
    - Language-agnostic: the Make target checks if package.json exists to decide how to format-check. Your Python ETL path still uses make format/make doctor.
    - Fail-fast: any step returning non-zero fails the whole run, just like CI.
