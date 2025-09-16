@@ -28,6 +28,18 @@ This repository contains configuration, templates, and helpers for working with 
   - `REQUIRED_ENV = POSTGRES_DSN RENDER_PG_URL STRIPE_SECRET_KEY`
 - Manual check: `make check-env` prints which variables are set and fails if any are missing.
 
+## Tests Scaffolding
+- Node (built-in runner)
+  - Template test at `tests/node/smoke.test.js`.
+  - Enable by adding scripts to your `package.json` (uncomment in `package.jsonc`):
+    - `"test": "node --test"`
+    - `"test:watch": "node --test --watch"`
+  - `make ci-local` runs `npm test` only if a `test` script exists.
+- Python (pytest)
+  - Template test at `tests/test_sanity.py`.
+  - `make ci-local` runs `pytest -q` if pytest is available and `tests/` exists.
+- See `tests/README.md` for quick usage notes.
+
 ## Quick Start
 1. Review `agent_manifest.yml` to confirm the stack and setup instructions.
 2. Follow `agents-template.md` in this template repo for detailed setup steps. If you’ve copied these files into a project, rename it to `agents.md` and follow that guide there.
