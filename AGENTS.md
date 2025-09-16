@@ -10,6 +10,7 @@ Agent Quickstart
 - Use the “Bootstrap (guide)” VS Code task or run `bash scripts/bootstrap-guide.sh` for a concise checklist and next actions.
 - To apply safe defaults automatically, use the “Bootstrap (materialize)” task or run `bash scripts/bootstrap-materialize.sh`.
 - For existing projects, prefer the “Promote to Root (non-destructive)” task (or `bash vs-code-codex-setup/scripts/promote-to-root.sh`) to copy missing files and get a merge checklist before making changes.
+ - Note: Some VS Code tasks use `direnv exec .`. If direnv isn’t installed, run the underlying Make targets directly (e.g., `make ci-local`).
 
 What To Ask The User (new project)
 - Stack confirmation: “What is your stack.kind? astro | static | wordpress | evidence | python-etl?” If unknown, infer from files.

@@ -39,6 +39,7 @@ This repository contains configuration, templates, and helpers for working with 
 6. ESLint: choose a block in `.eslintrc.jsons` and save it as root `.eslintrc.json`.
 7. Validate from the project root:
    - Create `.env.local` from `.env.example` and fill values.
+   - If using direnv, ensure `.envrc` exists (from template) and run `direnv allow`.
    - Run the “Bootstrap (guide)” task to confirm setup, then “CI (local)” or `make ci-local`.
    - Optional: use the “Promote to Root (non-destructive)” VS Code task to copy missing files and get a merge checklist.
 
