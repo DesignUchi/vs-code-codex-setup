@@ -7,6 +7,8 @@ echo "== Codex Template Materialize =="
 kind=""
 if [[ -f agent_manifest.yml ]]; then
   kind=$(grep -E "^\s*kind:\s*" agent_manifest.yml | sed -E 's/.*kind:\s*//') || kind=""
+  # trim whitespace
+  kind=$(echo "${kind}" | xargs || true)
 fi
 
 echo "stack.kind=${kind:-<unset>}"
@@ -72,4 +74,3 @@ else
 fi
 
 echo "Materialization complete. Next: fill .env.local and run make ci-local."
-
