@@ -2,6 +2,9 @@
   "name": "project-starter",
   "private": true,
   "scripts": {
+    // Enable Node tests by uncommenting the next line(s)
+    // "test": "node --test",
+    // "test:watch": "node --test --watch",
     "format": "prettier . --write",
     "format:check": "prettier . --check",
     "lint": "eslint ."
