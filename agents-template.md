@@ -39,9 +39,10 @@ This repository also includes a machine-readable configuration file:
    - Python ETL: `make doctor`
 7. Commit with a semantic message (see section below).
 
-### 📎 If applying these starter files to an **existing project**,  
-see [`APPLYING_TO_EXISTING_PROJECT.md`](docs/APPLYING_TO_EXISTING_PROJECT.md)  
-for the integration checklist (review existing files, merge guidelines, add missing files, update `state.md`).
+### 📎 Applying to an existing project
+- Drop this folder into your repo as `vs-code-codex-setup/`.
+- Use the VS Code task “Promote to Root (non-destructive)” (or run `bash vs-code-codex-setup/scripts/promote-to-root.sh`) to copy missing files and list merge steps.
+- Then follow the README “Getting Started” section to finalize setup.
 ---
 
 ## 1. Use the Development Server (when available)

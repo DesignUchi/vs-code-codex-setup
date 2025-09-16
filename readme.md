@@ -7,7 +7,7 @@ This repository contains configuration, templates, and helpers for working with 
 - **agent_manifest.yml** → Machine-readable manifest defining stack type, env loader, venv usage, and default tasks. Agents can parse this file to auto-bootstrap a new project.
 - **docs/state.md** → Living log of project state, completed work, and to-dos for both humans and agents.
 - **docs/security.md** → Security policy, secrets management, and incident response guide.
-- **docs/APPLYING_TO_EXISTING_PROJECT.md** → Step-by-step guide for integrating these starter files into an existing project.
+- For existing projects, follow “Getting Started” below and use the VS Code task “Promote to Root (non-destructive)”.
 
 ## What’s Included
 - `.vscode/settings.json` and `.vscode/tasks.json` → Prettier-on-save, ESLint integration, and one-click tasks for `make lint`, `make format`, `make smoke`.
@@ -19,7 +19,7 @@ This repository contains configuration, templates, and helpers for working with 
 - `.env.example` → Template for local secrets. Copy to `.env.local` (gitignored).
 - `.envrc.template` → Minimal direnv config (`dotenv .env.local`).
 - `agent_manifest.yml` → Stack-aware bootstrap manifest for agents and humans.
-- `docs/` → `security.md`, `state.md` (and `state-template.md`), and `APPLYING_TO_EXISTING_PROJECT.md`.
+- `docs/` → `security.md`, `state.md` (and `state-template.md`).
 - `package.jsonc` → JSONC template with base scripts and devDependencies; rename to `package.json` when enabling Node flows.
 - `.eslintrc.jsons` → Multi-profile ESLint template; choose the relevant block and save as `.eslintrc.json` in a project.
 - `scripts/` → Placeholder for helper scripts.
