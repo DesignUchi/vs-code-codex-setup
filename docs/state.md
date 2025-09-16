@@ -7,6 +7,8 @@ This file tracks the state of the vs-code-codex-setup project. If copying these 
 - See `docs/state-template.md` for usage notes and example structure. 
 
 ## To-dos
+
+### 9/16/25 Completed Items
 - [x] Add local CI setup instructions 
    - [x] make ci-local
    - [x] make install (idempotent)

@@ -11,11 +11,13 @@ This repository contains configuration, templates, and helpers for working with 
 
 ## What’s Included
 - `.vscode/settings.json` and `.vscode/tasks.json` → Prettier-on-save, ESLint integration, and one-click tasks for `make lint`, `make format`, `make smoke`.
+- VS Code tasks: “Bootstrap (guide)” and “Bootstrap (materialize)” to help agents/users initialize a project quickly.
 - `Makefile` → Common shortcuts: `venv`, `install`, `lint`, `format`, `smoke`, plus example Codex helpers.
 - `Makefile (CI-local & env checks)` → `make ci-local` chains install → lint → format-check → optional env check → optional tests → smoke. Configure required env vars by setting `REQUIRED_ENV` in a project; run `make check-env` to validate.
 - `.pre-commit-config.yaml` → Prettier + Tailwind plugin, Ruff, Black, and common hygiene hooks.
 - `.editorconfig` → Editor consistency across IDEs (indentation, line endings).
 - `.env.example` → Template for local secrets. Copy to `.env.local` (gitignored).
+- `.envrc.template` → Minimal direnv config (`dotenv .env.local`).
 - `agent_manifest.yml` → Stack-aware bootstrap manifest for agents and humans.
 - `docs/` → `security.md`, `state.md` (and `state-template.md`), and `APPLYING_TO_EXISTING_PROJECT.md`.
 - `package.jsonc` → JSONC template with base scripts and devDependencies; rename to `package.json` when enabling Node flows.
@@ -27,6 +29,16 @@ This repository contains configuration, templates, and helpers for working with 
 - Env validation: set `REQUIRED_ENV` in your project (Makefile or shell) to enforce required variables. Example:
   - `REQUIRED_ENV = POSTGRES_DSN RENDER_PG_URL STRIPE_SECRET_KEY`
 - Manual check: `make check-env` prints which variables are set and fails if any are missing.
+
+## How To Use
+1) Open the command palette “Tasks: Run Task” and run “Bootstrap (guide)” to see recommended next steps based on repo state.
+2) Run “Bootstrap (materialize)” to apply safe defaults:
+   - Create `.envrc` from `.envrc.template` (direnv users can run `direnv allow`).
+   - For Node stacks (astro/static/wordpress/evidence): create `package.json` if needed with tests enabled, or add `test` scripts to existing `package.json`.
+3) Create `.env.local` from `.env.example` and fill values (never commit `.env.local`).
+4) If using ETL, set `REQUIRED_ENV` in your project Makefile to enforce env checks.
+5) Run `make ci-local` or the “CI (local)” task to validate lint/format/env/tests/smoke.
+6) Install pre-commit hooks with `pre-commit install` (optional).
 
 ## Tests Scaffolding
 - Node (built-in runner)

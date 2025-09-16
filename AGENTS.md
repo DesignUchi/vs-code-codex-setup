@@ -8,6 +8,7 @@ Agent Quickstart
 - Read `agent_manifest.yml` to learn the intended stack (`stack.kind`) and conventions.
 - Run `make ci-local` to validate the environment non-destructively. Steps skip gracefully when tools aren’t configured.
 - Use the “Bootstrap (guide)” VS Code task or run `bash scripts/bootstrap-guide.sh` for a concise checklist and next actions.
+- To apply safe defaults automatically, use the “Bootstrap (materialize)” task or run `bash scripts/bootstrap-materialize.sh`.
 
 What To Ask The User (new project)
 - Stack confirmation: “What is your stack.kind? astro | static | wordpress | evidence | python-etl?” If unknown, infer from files.
@@ -25,8 +26,13 @@ Bootstrap Actions (non-destructive by default)
 - CI: Run `make ci-local`. If failures occur, surface logs and propose fixes.
 - Tests: For Node, add a `test` script; for Python, ensure `pytest` is installed and keep `tests/` scaffold.
 
+Materialize Script Behavior
+- `.envrc`: creates from `.envrc.template` if missing.
+- Node stacks (astro/static/wordpress/evidence):
+  - If `package.json` exists, ensures `test` and `test:watch` scripts are present.
+  - If only `package.jsonc` exists, writes a minimal `package.json` with test scripts enabled and base devDependencies; user should run `npm install` next.
+
 Safety & Style
 - Prefer Makefile and VS Code tasks over ad-hoc commands.
 - Keep changes minimal; ask before destructive actions (rename/install). 
 - Document decisions in `docs/state.md` when applied to a real project.
-
