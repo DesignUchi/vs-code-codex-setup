@@ -1,2 +1,4 @@
 dotenv .env.local
 
+# Render API key for MCP. Note: use Render CLI because this doesn't work in Codex chat in VS code yet.
+#export RENDER_API_KEY=

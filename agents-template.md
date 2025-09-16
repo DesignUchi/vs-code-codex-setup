@@ -160,6 +160,7 @@ This repository also includes a machine-readable configuration file:
 - Configure which variables are required by setting `REQUIRED_ENV` in your project (Makefile or shell), for example:
   - `REQUIRED_ENV = POSTGRES_DSN RENDER_PG_URL STRIPE_SECRET_KEY`
 - `make ci-local` includes this check via `ci-check-env` and fails fast if any required variable is missing.
+- After copying this template into a project, run `direnv allow` (if using direnv) followed by `direnv exec . pre-commit install` so the bundled hooks (ruff, black, prettier, ci-local) run automatically before commits.
 
 ---
 

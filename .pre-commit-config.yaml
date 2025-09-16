@@ -13,10 +13,12 @@ repos:
         args: ["--line-length=88"]
 
   - repo: https://github.com/pre-commit/mirrors-prettier
-    rev: v3.3.3
+    rev: v4.0.0-alpha.8
     hooks:
       - id: prettier
-        additional_dependencies: ["prettier-plugin-tailwindcss@^0.6.6"]
+        additional_dependencies:
+          - prettier@3.4.2
+          - prettier-plugin-tailwindcss@^0.6.6
 
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v4.6.0
@@ -28,6 +30,6 @@ repos:
     hooks:
       - id: ci-local
         name: ci-local
-        entry: make ci-local
+        entry: direnv exec . make ci-local
         language: system
         pass_filenames: false

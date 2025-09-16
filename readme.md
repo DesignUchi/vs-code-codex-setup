@@ -42,6 +42,7 @@ This repository contains configuration, templates, and helpers for working with 
    - If using direnv, ensure `.envrc` exists (from template) and run `direnv allow`.
    - Run the “Bootstrap (guide)” task to confirm setup, then “CI (local)” or `make ci-local`.
    - Optional: use the “Promote to Root (non-destructive)” VS Code task to copy missing files and get a merge checklist.
+   - Enable the bundled pre-commit hooks with `direnv allow` (if using direnv) then `direnv exec . pre-commit install`.
 
 Tip: You can run the VS Code task “Promote to Root (non-destructive)” or execute `bash vs-code-codex-setup/scripts/promote-to-root.sh` from the project root to copy missing files safely and list what needs manual merging.
 
