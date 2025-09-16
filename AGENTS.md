@@ -9,6 +9,7 @@ Agent Quickstart
 - Run `make ci-local` to validate the environment non-destructively. Steps skip gracefully when tools aren’t configured.
 - Use the “Bootstrap (guide)” VS Code task or run `bash scripts/bootstrap-guide.sh` for a concise checklist and next actions.
 - To apply safe defaults automatically, use the “Bootstrap (materialize)” task or run `bash scripts/bootstrap-materialize.sh`.
+- For existing projects, prefer the “Promote to Root (non-destructive)” task (or `bash vs-code-codex-setup/scripts/promote-to-root.sh`) to copy missing files and get a merge checklist before making changes.
 
 What To Ask The User (new project)
 - Stack confirmation: “What is your stack.kind? astro | static | wordpress | evidence | python-etl?” If unknown, infer from files.
@@ -31,6 +32,11 @@ Materialize Script Behavior
 - Node stacks (astro/static/wordpress/evidence):
   - If `package.json` exists, ensures `test` and `test:watch` scripts are present.
   - If only `package.jsonc` exists, writes a minimal `package.json` with test scripts enabled and base devDependencies; user should run `npm install` next.
+
+Promote-to-root Behavior (existing projects)
+- Non-destructive: copies missing files/dirs; prints a manual merge checklist for items that already exist.
+- Typical items: `.vscode/`, `.editorconfig`, `.pre-commit-config.yaml`, `Makefile`, `docs/`, `AGENTS.md`, `.envrc.template`, `.env.example`, `agents-template.md`, `agent_manifest.yml`, `.eslintrc.jsons`, `package.jsonc`.
+- After promotion, ask before merging `.vscode/tasks.json`, `.pre-commit-config.yaml`, `Makefile` targets, and converting `agents-template.md` → `agents.md` at the project root.
 
 Safety & Style
 - Prefer Makefile and VS Code tasks over ad-hoc commands.
