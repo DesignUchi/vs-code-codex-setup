@@ -25,6 +25,16 @@
       "problemMatcher": []
     },
     {
+      "label": "Promote to Root (non-destructive)",
+      "type": "shell",
+      "command": "bash -c 'if [ -x scripts/promote-to-root.sh ]; then bash scripts/promote-to-root.sh; elif [ -x vs-code-codex-setup/scripts/promote-to-root.sh ]; then bash vs-code-codex-setup/scripts/promote-to-root.sh; else echo \"promote-to-root.sh not found\"; exit 1; fi'",
+      "presentation": {
+        "reveal": "always",
+        "panel": "dedicated"
+      },
+      "problemMatcher": []
+    },
+    {
       "label": "Lint",
       "type": "shell",
       "command": "direnv exec . make lint",
