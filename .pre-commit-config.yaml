@@ -23,3 +23,11 @@ repos:
     hooks:
       - id: end-of-file-fixer
       - id: trailing-whitespace
+
+  - repo: local
+    hooks:
+      - id: ci-local
+        name: ci-local
+        entry: make ci-local
+        language: system
+        pass_filenames: false

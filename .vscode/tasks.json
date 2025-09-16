@@ -31,5 +31,13 @@
         "panel": "dedicated"
       }
     }
+    ,
+    {
+      "label": "CI (local)",
+      "type": "shell",
+      "command": "direnv exec . make ci-local",
+      "presentation": { "reveal": "always", "panel": "dedicated" },
+      "problemMatcher": []
+    }
   ]
 }
