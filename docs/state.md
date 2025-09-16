@@ -7,67 +7,17 @@ This file tracks the state of the vs-code-codex-setup project. If copying these 
 - See `docs/state-template.md` for usage notes and example structure. 
 
 ## To-dos
-- [ ] Add local CI setup instructions 
-   - [ ] make ci-local
-   - make install (idempotent)
-   - make lint
-   - npm run format:check (if Node project) or make format (Python ETL)
-   - make check-env (ETL)
-   - make smoke or make doctor
-   - (placeholder) run tests if present
+- [x] Add local CI setup instructions 
+   - [x] make ci-local
+   - [x] make install (idempotent)
+   - [x] make lint
+   - [x] Format check (Prettier for Node, `make format` for Python)
+   - [ ] make check-env (ETL)
+   - [x] make smoke or make doctor (via ci-smoke)
+   - [ ] Tests placeholder
 
-   Drop in code:
-    ```Makefile
-    # Makefile additions
-
-# Run a CI-like pipeline locally (safe to re-run; exits non-zero on failures)
-ci-local: install lint ci-format-check ci-smoke ## local CI runner
-	@echo "✅ CI-local passed"
-
-# Format check (Node vs Python)
-ci-format-check:
-	@if [ -f package.json ]; then \
-		npx --yes prettier . --check || exit 1; \
-	else \
-		$(MAKE) format && echo "Format step complete (Python)"; \
-	fi
-
-# Smoke step: prefer doctor if available, else smoke
-ci-smoke:
-	@if $(MAKE) -n doctor >/dev/null 2>&1; then \
-		$(MAKE) doctor; \
-	else \
-		$(MAKE) smoke; \
-	fi
-    ```
-pre-commit-config.yaml additions:
-```yaml
-# .pre-commit-config.yaml (add/merge this block)
-repos:
-  - repo: local
-    hooks:
-      - id: ci-local
-        name: ci-local
-        entry: make ci-local
-        language: system
-        pass_filenames: false
-    ```
-.vscode/tasks.json additions:
-```json
-// .vscode/tasks.json (add a one-click local CI task)
-{
-  "version": "2.0.0",
-  "tasks": [
-    {
-      "label": "CI (local)",
-      "type": "shell",
-      "command": "direnv exec . make ci-local",
-      "presentation": { "reveal": "always", "panel": "dedicated" },
-      "problemMatcher": []
-    }
-  ]
-}
-```
+Summary:
+- Introduced a local CI runner (`make ci-local`) that chains install, lint, format-check, and a smoke/doctor step with fail-fast behavior. Added a matching VS Code task “CI (local)” and a pre-commit hook to run `make ci-local`. The format step auto-selects Prettier check for Node projects or `make format` for Python. A future enhancement is to add an optional `make check-env` for ETL projects and wire in tests when present.
 ## Notes
    - Language-agnostic: the Make target checks if package.json exists to decide how to format-check. Your Python ETL path still uses make format/make doctor.
    - Fail-fast: any step returning non-zero fails the whole run, just like CI.
