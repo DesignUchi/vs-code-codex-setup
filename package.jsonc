@@ -1,0 +1,37 @@
+{
+  "name": "project-starter",
+  "private": true,
+  "scripts": {
+    "format": "prettier . --write",
+    "format:check": "prettier . --check",
+    "lint": "eslint ."
+  },
+  // ────────────────────────────────────────────────────────────────────────────
+  // Base dev dependencies (keep for ALL stacks)
+  // ────────────────────────────────────────────────────────────────────────────
+  "devDependencies": {
+    // Prettier core + Tailwind class sorter (works for HTML/JS/TS/Svelte/Astro)
+    "prettier": "^3.3.3",
+    "prettier-plugin-tailwindcss": "^0.6.8",
+
+    // ESLint core (generic JS/TS lint). Keep for Astro/Evidence/Static/WP if you lint JS.
+    "eslint": "^8.57.0",
+
+    // ──────────────────────────────────────────────────────────────────────────
+    // TypeScript (optional; keep if using TS in any stack)
+    // ──────────────────────────────────────────────────────────────────────────
+    // "@typescript-eslint/eslint-plugin": "^7.16.0",
+    // "@typescript-eslint/parser": "^7.16.0",
+
+    // ──────────────────────────────────────────────────────────────────────────
+    // ASTRO (keep ONLY for Astro projects)
+    // ──────────────────────────────────────────────────────────────────────────
+    // "eslint-plugin-astro": "^0.34.0",
+
+    // ──────────────────────────────────────────────────────────────────────────
+    // EVIDENCE / SVELTE (keep ONLY for Svelte-based projects like Evidence)
+    // ──────────────────────────────────────────────────────────────────────────
+    // "eslint-plugin-svelte": "^2.43.0",
+    // "svelte-eslint-parser": "^0.33.0"
+  }
+}

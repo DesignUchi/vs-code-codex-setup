@@ -1,0 +1,22 @@
+{
+  // Format on save using Prettier
+  "editor.formatOnSave": true,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+
+  // ESLint integration
+  "eslint.validate": [
+    "javascript",
+    "javascriptreact",
+    "typescript",
+    "typescriptreact",
+    "svelte"
+  ],
+  "eslint.run": "onSave",
+
+  // Tailwind CSS class sorting (requires prettier-plugin-tailwindcss)
+  "prettier.pluginSearchDirs": ["."],
+
+  // Keep consistent tab/spacing
+  "editor.tabSize": 2,
+  "editor.insertSpaces": true
+}
