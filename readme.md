@@ -11,7 +11,7 @@ This repository contains configuration, templates, and helpers for working with 
 
 ## What’s Included
 - `.vscode/settings.json` and `.vscode/tasks.json` → Prettier-on-save, ESLint integration, and one-click tasks for `make lint`, `make format`, `make smoke`.
-- VS Code tasks: “Bootstrap (guide)” and “Bootstrap (materialize)” to help agents/users initialize a project quickly.
+- VS Code tasks: “Bootstrap (guide)”, “Bootstrap (materialize)”, and “Promote to Root (non-destructive)” to help agents/users initialize and merge into existing projects quickly.
 - `Makefile` → Common shortcuts: `venv`, `install`, `lint`, `format`, `smoke`, plus example Codex helpers.
 - `Makefile (CI-local & env checks)` → `make ci-local` chains install → lint → format-check → optional env check → optional tests → smoke. Configure required env vars by setting `REQUIRED_ENV` in a project; run `make check-env` to validate.
 - `.pre-commit-config.yaml` → Prettier + Tailwind plugin, Ruff, Black, and common hygiene hooks.
@@ -40,8 +40,9 @@ This repository contains configuration, templates, and helpers for working with 
 7. Validate from the project root:
    - Create `.env.local` from `.env.example` and fill values.
    - Run the “Bootstrap (guide)” task to confirm setup, then “CI (local)” or `make ci-local`.
+   - Optional: use the “Promote to Root (non-destructive)” VS Code task to copy missing files and get a merge checklist.
 
-Tip: You can run `bash vs-code-codex-setup/scripts/promote-to-root.sh` from the project root to copy missing files safely and list what needs manual merging.
+Tip: You can run the VS Code task “Promote to Root (non-destructive)” or execute `bash vs-code-codex-setup/scripts/promote-to-root.sh` from the project root to copy missing files safely and list what needs manual merging.
 
 - Alternative (new project): use this folder as the project root, then follow steps 2, 4–7 above (skip promotion/merge).
 
