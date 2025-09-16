@@ -154,6 +154,12 @@ for the integration checklist (review existing files, merge guidelines, add miss
     pip install -r requirements.txt
     ```
 
+### Env checks (ETL projects)
+- Use `make check-env` to validate required environment variables before running jobs.
+- Configure which variables are required by setting `REQUIRED_ENV` in your project (Makefile or shell), for example:
+  - `REQUIRED_ENV = POSTGRES_DSN RENDER_PG_URL STRIPE_SECRET_KEY`
+- `make ci-local` includes this check via `ci-check-env` and fails fast if any required variable is missing.
+
 ---
 
 ## 6. Useful Commands Recap

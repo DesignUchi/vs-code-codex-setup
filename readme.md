@@ -12,6 +12,7 @@ This repository contains configuration, templates, and helpers for working with 
 ## What’s Included
 - `.vscode/settings.json` and `.vscode/tasks.json` → Prettier-on-save, ESLint integration, and one-click tasks for `make lint`, `make format`, `make smoke`.
 - `Makefile` → Common shortcuts: `venv`, `install`, `lint`, `format`, `smoke`, plus example Codex helpers.
+- `Makefile (CI-local & env checks)` → `make ci-local` chains install → lint → format-check → optional env check → optional tests → smoke. Configure required env vars by setting `REQUIRED_ENV` in a project; run `make check-env` to validate.
 - `.pre-commit-config.yaml` → Prettier + Tailwind plugin, Ruff, Black, and common hygiene hooks.
 - `.editorconfig` → Editor consistency across IDEs (indentation, line endings).
 - `.env.example` → Template for local secrets. Copy to `.env.local` (gitignored).
@@ -20,6 +21,12 @@ This repository contains configuration, templates, and helpers for working with 
 - `package.jsonc` → JSONC template with base scripts and devDependencies; rename to `package.json` when enabling Node flows.
 - `.eslintrc.jsons` → Multi-profile ESLint template; choose the relevant block and save as `.eslintrc.json` in a project.
 - `scripts/` → Placeholder for helper scripts.
+
+## Local CI and Env Checks
+- Run `make ci-local` to validate formatting, linting, environment, tests, and a smoke step locally with fail-fast behavior.
+- Env validation: set `REQUIRED_ENV` in your project (Makefile or shell) to enforce required variables. Example:
+  - `REQUIRED_ENV = POSTGRES_DSN RENDER_PG_URL STRIPE_SECRET_KEY`
+- Manual check: `make check-env` prints which variables are set and fails if any are missing.
 
 ## Quick Start
 1. Review `agent_manifest.yml` to confirm the stack and setup instructions.
