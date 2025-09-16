@@ -5,6 +5,16 @@
   },
   "tasks": [
     {
+      "label": "Bootstrap (guide)",
+      "type": "shell",
+      "command": "bash scripts/bootstrap-guide.sh",
+      "presentation": {
+        "reveal": "always",
+        "panel": "dedicated"
+      },
+      "problemMatcher": []
+    },
+    {
       "label": "Lint",
       "type": "shell",
       "command": "direnv exec . make lint",
