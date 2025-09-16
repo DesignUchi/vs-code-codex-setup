@@ -23,23 +23,27 @@ This repository contains configuration, templates, and helpers for working with 
 - `package.jsonc` → JSONC template with base scripts and devDependencies; rename to `package.json` when enabling Node flows.
 - `.eslintrc.jsons` → Multi-profile ESLint template; choose the relevant block and save as `.eslintrc.json` in a project.
 - `scripts/` → Placeholder for helper scripts.
+  - `scripts/promote-to-root.sh` → Non-destructive helper to copy/merge this folder’s assets to the project root.
 
 ## Getting Started
-- In this template repo: use it as a reference and copy into your project when ready.
-- In a real project: follow these steps for a clean bootstrap.
+- Default workflow: drop this folder into an existing project, then promote/merge files to the project root.
 
-1. Review `agent_manifest.yml` and set `project_name` and `stack.kind` (astro | static | wordpress | evidence | python-etl).
-2. Run the VS Code task “Bootstrap (guide)” to see recommended next actions based on detected files.
-3. Optionally run “Bootstrap (materialize)” to apply safe defaults:
-   - Create `.envrc` from `.envrc.template` (direnv users: `direnv allow`).
-   - For Node stacks (astro/static/wordpress/evidence): create `package.json` if needed with tests enabled, or add `test` scripts to an existing `package.json`.
-4. Create `.env.local` from `.env.example` and fill values (never commit `.env.local`).
-5. Configure tooling per stack:
-   - Node: choose a block in `.eslintrc.jsons` and save as `.eslintrc.json`; run `npm install`.
-   - Python ETL: create a venv (`make venv`) and install deps (`make install`); set `REQUIRED_ENV` in your Makefile to enforce env checks if desired.
-6. Validate locally: run `make ci-local` or the “CI (local)” task (lint/format/env/tests/smoke, skips missing parts).
-7. After copying into a project, rename `agents-template.md` to `agents.md` for human/agent discovery.
-8. Optional: install pre-commit hooks with `pre-commit install`.
+1. Copy this folder into the project root as `my-project/vs-code-codex-setup/`.
+2. In `vs-code-codex-setup/agent_manifest.yml`, set `project_name` and `stack.kind` (astro | static | wordpress | evidence | python-etl).
+3. Ask your agent to review `vs-code-codex-setup/agents-template.md` and `AGENTS.md` to plan promotion/merges.
+4. Promote/merge to the project root (don’t overwrite without review):
+   - `.vscode/`, `.editorconfig`, `.pre-commit-config.yaml`, `Makefile`, `docs/`, `AGENTS.md`.
+   - `.envrc` (from `.envrc.template`).
+   - `agents-template.md` → rename to `agents.md` at the project root.
+5. Node projects: keep the existing `package.json`; use `package.jsonc` only as a reference. Optionally add `"test": "node --test"` to enable Node’s test runner.
+6. ESLint: choose a block in `.eslintrc.jsons` and save it as root `.eslintrc.json`.
+7. Validate from the project root:
+   - Create `.env.local` from `.env.example` and fill values.
+   - Run the “Bootstrap (guide)” task to confirm setup, then “CI (local)” or `make ci-local`.
+
+Tip: You can run `bash vs-code-codex-setup/scripts/promote-to-root.sh` from the project root to copy missing files safely and list what needs manual merging.
+
+- Alternative (new project): use this folder as the project root, then follow steps 2, 4–7 above (skip promotion/merge).
 
 ## Local CI and Env Checks
 - Run `make ci-local` to validate formatting, linting, environment, tests, and a smoke step locally with fail-fast behavior.
@@ -60,11 +64,7 @@ This repository contains configuration, templates, and helpers for working with 
 - See `tests/README.md` for quick usage notes.
 
 ## Quick Start
-- Short version of “Getting Started” for experienced users:
-  1) Set `stack.kind` in `agent_manifest.yml` and create `.env.local`.
-  2) Run “Bootstrap (materialize)”. Then, for Node, `npm install`; for Python, `make venv && make install`.
-  3) Create `.eslintrc.json` from `.eslintrc.jsons` (Node stacks).
-  4) Run `make ci-local` and iterate.
+- Copy `vs-code-codex-setup/` into your repo root → set `project_name` + `stack.kind` → promote `.vscode/`, `.editorconfig`, `.pre-commit-config.yaml`, `Makefile`, `docs/`, `.envrc` (from template), and rename `agents-template.md` → `agents.md` at root → create `.env.local` → run “Bootstrap (guide)” then “CI (local)”.
 
 ## Dependencies
 See `agents-template.md` → **Quick Install Commands by Stack** for per-stack npm install lines.
