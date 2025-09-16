@@ -1,5 +1,7 @@
 # Makefile — VS Code Codex Setup (stack-aware)
 
+SHELL := /bin/bash
+
 VENV=.venv
 PYTHON=python3
 PIP=$(VENV)/bin/pip
@@ -18,7 +20,7 @@ help:
 	@echo "  lint          Lint (ESLint for Node stacks; ruff/black for Python)"
 	@echo "  format        Format (Prettier for Node; black for Python)"
 	@echo "  smoke         Quick env sanity"
-	@echo "  ci-local      Local CI pipeline (install/lint/format/tests/smoke)"
+	@echo "  ci-local      Local CI pipeline (install/lint/format/env/tests/smoke)"
 	@echo "  codex-login   Codex CLI login"
 	@echo "  codex-run     Codex CLI example (apikey)"
 
@@ -84,7 +86,7 @@ smoke:
 	@$(PYTHON) -V 2>/dev/null || echo "python: n/a"
 
 # Local CI runner (safe to re-run; exits non-zero on failures where appropriate)
-ci-local: install ci-format-check ci-lint ci-tests ci-smoke
+ci-local: install ci-format-check ci-lint ci-check-env ci-tests ci-smoke
 	@echo "✅ CI-local passed"
 
 ci-format-check:
@@ -101,6 +103,24 @@ endif
 
 ci-lint:
 	@$(MAKE) lint
+
+# Environment check (template for ETL projects)
+# Override REQUIRED_ENV in your project Makefile or via env to enforce checks,
+# e.g.: REQUIRED_ENV = POSTGRES_DSN RENDER_PG_URL STRIPE_SECRET_KEY
+REQUIRED_ENV ?=
+
+check-env:
+	@if [ -z "$(REQUIRED_ENV)" ]; then echo "Skipping check-env (REQUIRED_ENV not configured)"; exit 0; fi
+	@if [ ! -f .env.local ]; then echo "⚠️  .env.local not found (skipping file presence check)"; fi
+	@missing=0; \
+	for v in $(REQUIRED_ENV); do \
+	  val=$$(printenv "$$v"); \
+	  if [ -z "$$val" ]; then echo "❌ $$v not set"; missing=1; else echo "✅ $$v set"; fi; \
+	done; \
+	if [ $$missing -ne 0 ]; then echo "Environment check failed"; exit 1; else echo "Environment OK"; fi
+
+ci-check-env:
+	@$(MAKE) check-env || { echo "check-env failed"; exit 1; }
 
 ci-smoke:
 	@$(MAKE) smoke
@@ -123,3 +143,5 @@ codex-run:
 	@OPENAI_API_KEY=$$OPENAI_API_KEY codex --config preferred_auth_method="apikey" --help
 
 .PHONY: help venv install lint format smoke ci-local ci-format-check ci-lint ci-tests ci-smoke codex-login codex-run
+
+.PHONY: check-env ci-check-env
