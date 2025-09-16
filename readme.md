@@ -24,21 +24,28 @@ This repository contains configuration, templates, and helpers for working with 
 - `.eslintrc.jsons` → Multi-profile ESLint template; choose the relevant block and save as `.eslintrc.json` in a project.
 - `scripts/` → Placeholder for helper scripts.
 
+## Getting Started
+- In this template repo: use it as a reference and copy into your project when ready.
+- In a real project: follow these steps for a clean bootstrap.
+
+1. Review `agent_manifest.yml` and set `project_name` and `stack.kind` (astro | static | wordpress | evidence | python-etl).
+2. Run the VS Code task “Bootstrap (guide)” to see recommended next actions based on detected files.
+3. Optionally run “Bootstrap (materialize)” to apply safe defaults:
+   - Create `.envrc` from `.envrc.template` (direnv users: `direnv allow`).
+   - For Node stacks (astro/static/wordpress/evidence): create `package.json` if needed with tests enabled, or add `test` scripts to an existing `package.json`.
+4. Create `.env.local` from `.env.example` and fill values (never commit `.env.local`).
+5. Configure tooling per stack:
+   - Node: choose a block in `.eslintrc.jsons` and save as `.eslintrc.json`; run `npm install`.
+   - Python ETL: create a venv (`make venv`) and install deps (`make install`); set `REQUIRED_ENV` in your Makefile to enforce env checks if desired.
+6. Validate locally: run `make ci-local` or the “CI (local)” task (lint/format/env/tests/smoke, skips missing parts).
+7. After copying into a project, rename `agents-template.md` to `agents.md` for human/agent discovery.
+8. Optional: install pre-commit hooks with `pre-commit install`.
+
 ## Local CI and Env Checks
 - Run `make ci-local` to validate formatting, linting, environment, tests, and a smoke step locally with fail-fast behavior.
 - Env validation: set `REQUIRED_ENV` in your project (Makefile or shell) to enforce required variables. Example:
   - `REQUIRED_ENV = POSTGRES_DSN RENDER_PG_URL STRIPE_SECRET_KEY`
 - Manual check: `make check-env` prints which variables are set and fails if any are missing.
-
-## How To Use
-1) Open the command palette “Tasks: Run Task” and run “Bootstrap (guide)” to see recommended next steps based on repo state.
-2) Run “Bootstrap (materialize)” to apply safe defaults:
-   - Create `.envrc` from `.envrc.template` (direnv users can run `direnv allow`).
-   - For Node stacks (astro/static/wordpress/evidence): create `package.json` if needed with tests enabled, or add `test` scripts to existing `package.json`.
-3) Create `.env.local` from `.env.example` and fill values (never commit `.env.local`).
-4) If using ETL, set `REQUIRED_ENV` in your project Makefile to enforce env checks.
-5) Run `make ci-local` or the “CI (local)” task to validate lint/format/env/tests/smoke.
-6) Install pre-commit hooks with `pre-commit install` (optional).
 
 ## Tests Scaffolding
 - Node (built-in runner)
@@ -53,11 +60,11 @@ This repository contains configuration, templates, and helpers for working with 
 - See `tests/README.md` for quick usage notes.
 
 ## Quick Start
-1. Review `agent_manifest.yml` to confirm the stack and setup instructions.
-2. Follow `agents-template.md` in this template repo for detailed setup steps. If you’ve copied these files into a project, rename it to `agents.md` and follow that guide there.
-3. Use the provided Makefile tasks or npm/yarn commands as documented in the guide.
-4. Update this README with any project-specific instructions or deviations from the guide.
-5. Extract and revise relevant sections from `agents-template.md` (or `agents.md` if renamed in a project) into this README for easier reference.
+- Short version of “Getting Started” for experienced users:
+  1) Set `stack.kind` in `agent_manifest.yml` and create `.env.local`.
+  2) Run “Bootstrap (materialize)”. Then, for Node, `npm install`; for Python, `make venv && make install`.
+  3) Create `.eslintrc.json` from `.eslintrc.jsons` (Node stacks).
+  4) Run `make ci-local` and iterate.
 
 ## Dependencies
 See `agents-template.md` → **Quick Install Commands by Stack** for per-stack npm install lines.
