@@ -52,3 +52,44 @@ Icon?
 
 # Misc
 coverage/
+
+# WordPress-specific (when site root is under site/)
+site/wp-admin/
+site/wp-includes/
+site/wp-*.php
+site/wp-config.php
+site/wp-config-sample.php
+site/license.txt
+site/readme.html
+site/xmlrpc.php
+site/index.php
+
+site/wp-content/*
+!site/wp-content/plugins/
+!site/wp-content/themes/
+!site/wp-content/mu-plugins/
+!site/wp-content/.gitignore
+
+site/wp-content/advanced-cache.php
+site/wp-content/object-cache.php
+site/wp-content/wp-cache-config.php
+site/wp-content/debug.log
+
+site/wp-content/cache/
+site/wp-content/uploads/
+site/wp-content/languages/
+site/wp-content/upgrade/
+site/wp-content/wflogs/
+site/wp-content/ai1wm-backups/
+site/wp-content/w3tc-config*/
+site/wp-content/tmp/
+site/wp-content/backups*/
+
+site/.htaccess
+site/.htaccess-*
+site/.user.ini
+site/.user.ini*
+site/.tmb/
+site/.well-known/
+site/cookie_monster/
+site/.quarantine/

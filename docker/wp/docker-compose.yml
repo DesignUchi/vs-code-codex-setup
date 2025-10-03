@@ -1,0 +1,83 @@
+services:
+  db:
+    image: mysql:8.0
+    container_name: flw-db
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: flw_wp
+      MYSQL_USER: flw_wp
+      MYSQL_PASSWORD: flw_wp_pass
+      MYSQL_ROOT_PASSWORD: flw_root_pass
+    ports:
+      - "3307:3306"
+    volumes:
+      - db_data:/var/lib/mysql
+    command:
+      - --default-authentication-plugin=mysql_native_password
+      - --character-set-server=utf8mb4
+      - --collation-server=utf8mb4_0900_ai_ci
+    networks:
+      - internal_net
+
+  wordpress:
+    image: wordpress:6.6.1-php8.2-apache
+    container_name: flw-mainsite
+    depends_on:
+      - db
+    restart: unless-stopped
+    environment:
+      WORDPRESS_DB_HOST: db:3306
+      WORDPRESS_DB_NAME: flw_wp
+      WORDPRESS_DB_USER: flw_wp
+      WORDPRESS_DB_PASSWORD: flw_wp_pass
+      WP_LOCAL_DB_NAME: flw_wp
+      WP_LOCAL_DB_USER: flw_wp
+      WP_LOCAL_DB_PASSWORD: flw_wp_pass
+      WP_LOCAL_DB_HOST: db
+    volumes:
+      - ./site:/var/www/html
+    networks:
+      - internal_net
+
+  proxy:
+    image: nginx:alpine
+    container_name: flw-proxy
+    depends_on:
+      - wordpress
+    restart: unless-stopped
+    ports:
+      - "${WP_HOST_PORT:-8181}:80"
+    volumes:
+      - ./docker/nginx/default.conf:/etc/nginx/conf.d/default.conf:ro
+    networks:
+      - internal_net
+      - public_net
+
+  wp-cli:
+    image: wordpress:cli-php8.2
+    depends_on:
+      - db
+    user: "33:33"
+    environment:
+      WORDPRESS_DB_HOST: db:3306
+      WORDPRESS_DB_NAME: flw_wp
+      WORDPRESS_DB_USER: flw_wp
+      WORDPRESS_DB_PASSWORD: flw_wp_pass
+      WP_LOCAL_DB_NAME: flw_wp
+      WP_LOCAL_DB_USER: flw_wp
+      WP_LOCAL_DB_PASSWORD: flw_wp_pass
+      WP_LOCAL_DB_HOST: db
+    volumes:
+      - ./site:/var/www/html
+    entrypoint: ["wp"]
+    command: ["--info"]
+    networks:
+      - internal_net
+
+volumes:
+  db_data:
+
+networks:
+  internal_net:
+    internal: true
+  public_net:
