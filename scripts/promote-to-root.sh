@@ -106,6 +106,25 @@ if [[ -f "$DEST/agent_manifest.yml" ]]; then
       cp -n "$SRC"/scripts/wp/*.sh "$DEST/scripts/" 2>/dev/null || true
     fi
     ok "Copied WordPress scripts into scripts/"
+    if [[ -f "$SRC/docker/wp/docker-compose.yml" ]]; then
+      info "Copying WordPress Docker stack"
+      if [[ ! -f "$DEST/docker-compose.yml" ]]; then
+        cp "$SRC/docker/wp/docker-compose.yml" "$DEST/docker-compose.yml"
+        ok "Copied docker-compose.yml"
+      else
+        warn "Exists, needs merge: docker-compose.yml"
+        MERGE_LIST+=("docker-compose.yml")
+      fi
+      if [[ -d "$SRC/docker/wp/docker" ]]; then
+        if command -v rsync >/dev/null 2>&1; then
+          rsync -a --ignore-existing "$SRC/docker/wp/docker/" "$DEST/docker/"
+        else
+          mkdir -p "$DEST/docker"
+          cp -nR "$SRC"/docker/wp/docker/* "$DEST/docker/"
+        fi
+        ok "Copied WordPress docker/ config"
+      fi
+    fi
   fi
 fi
 
