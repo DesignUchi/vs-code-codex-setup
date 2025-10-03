@@ -94,6 +94,21 @@ for d in "${TO_COPY_DIRS[@]}"; do
   fi
 done
 
+# If project stack is WordPress, materialize wp scripts into scripts/
+if [[ -f "$DEST/agent_manifest.yml" ]]; then
+  stack_kind=$(grep -E '^\s*kind\s*:' "$DEST/agent_manifest.yml" | awk -F: '{print $2}' | xargs)
+  if [[ "$stack_kind" == "wordpress" && -d "$SRC/scripts/wp" ]]; then
+    info "Detected WordPress stack; copying WordPress helper scripts"
+    mkdir -p "$DEST/scripts"
+    if command -v rsync >/dev/null 2>&1; then
+      rsync -a --ignore-existing "$SRC/scripts/wp/" "$DEST/scripts/"
+    else
+      cp -n "$SRC"/scripts/wp/*.sh "$DEST/scripts/" 2>/dev/null || true
+    fi
+    ok "Copied WordPress scripts into scripts/"
+  fi
+fi
+
 # Files
 for f in "${TO_COPY_FILES[@]}"; do
   if [[ -f "$SRC/$f" ]]; then
@@ -122,4 +137,3 @@ echo "- Merge .vscode/tasks.json, .pre-commit-config.yaml, and Makefile targets 
 echo "- After promotion: create .env.local, pick an ESLint block from .eslintrc.jsons -> .eslintrc.json, then run CI (local)."
 
 ok "Promotion complete (non-destructive)."
-

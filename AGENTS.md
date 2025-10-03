@@ -16,6 +16,8 @@ What To Ask The User (new project)
 - Stack confirmation: “What is your stack.kind? astro | static | wordpress | evidence | python-etl?” If unknown, infer from files.
 - Node materialization: “May I rename `package.jsonc` to `package.json` and run npm install?”
 - ESLint config: “Which `.eslintrc.jsons` block should I save as `.eslintrc.json` (Static/WordPress, Astro, Evidence)?”
+- WordPress layout: “Should we keep the WordPress webroot inside a subfolder such as `site/` so tooling/docs can stay at the repo root and subtree-style deploys remain easy?”
+- WordPress helper scripts: “Do you want to use the bundled scripts under `scripts/wp/`? If so, which SSH host/DB credentials should I configure before running them?”
 - Env loading: “Should I create `.env.local` from `.env.example` and, if using direnv, write `.envrc` with `dotenv .env.local`?”
 - ETL env checks: “Do you want to enforce env vars? If so, I’ll set `REQUIRED_ENV` in the Makefile (e.g., `POSTGRES_DSN RENDER_PG_URL …`).”
 - Tests: “Enable Node tests by adding `\"test\": \"node --test\"` to `package.json`? Install pytest for Python tests?”
