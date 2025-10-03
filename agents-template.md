@@ -59,6 +59,7 @@ This repository also includes a machine-readable configuration file:
   - Use a local dev environment (e.g. Local WP, Docker, or MAMP).  
   - Do not modify files directly on production servers. Sync or export/import changes only after testing locally.
   - Keep the WordPress install inside a dedicated subfolder (for example `site/`) so repo tooling/doc files stay at the root and subtree-style deploys are simpler.
+  - If you copy the provided Docker stack (`docker-compose.yml` + `docker/nginx/default.conf`), adjust environment variables, passwords, and exposed ports (defaults assume 3307/8181; pick unused values).
   - Update any scripts copied from `scripts/wp/` (SSH hostnames, database names/passwords, etc.) before running them.
 
 - **Evidence projects (Svelte-based)**:
@@ -290,5 +291,14 @@ Agents: when bootstrapping a project, prefer the `.json` version for easier pars
 
 > Agents: Run the install line that matches the `stack.kind` in `agent_manifest.yml`.  
 > Humans: Copy-paste the line that matches your project type.
+
+### WordPress Git/SSH Setup (recommended flow)
+
+1. `git init` in the project root (keep `.git/` out of the public webroot) and add the WordPress ignore patterns before committing.
+2. Create an SSH alias (e.g., `wp-prod`) in `~/.ssh/config` for the production server.
+3. On the server, run `mkdir -p ~/git && git init --bare ~/git/<project>.git` so the live webroot stays `.git`-free.
+4. Locally add remotes (`git remote add prod ssh://wp-prod/~/git/<project>.git`, plus GitHub) and push the initial commit.
+5. Use a subtree push or the provided `git deploy` alias so only the `site/` directory is published. Run `git deploy --dry-run --progress prod` before the real push.
+6. After the dry run, run `git deploy --progress prod`, verify the site, and document the setup in `docs/state.md`.
 
 ---

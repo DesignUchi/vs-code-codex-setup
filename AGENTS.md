@@ -17,7 +17,8 @@ What To Ask The User (new project)
 - Node materialization: “May I rename `package.jsonc` to `package.json` and run npm install?”
 - ESLint config: “Which `.eslintrc.jsons` block should I save as `.eslintrc.json` (Static/WordPress, Astro, Evidence)?”
 - WordPress layout: “Should we keep the WordPress webroot inside a subfolder such as `site/` so tooling/docs can stay at the repo root and subtree-style deploys remain easy?”
-- WordPress helper scripts: “Do you want to use the bundled scripts under `scripts/wp/`? If so, which SSH host/DB credentials should I configure before running them?”
+- WordPress helper scripts: “Do you want to use the bundled scripts under `scripts/wp/`? If so, which SSH host/DB credentials should I configure before running them? Also confirm local ports before standing up Docker (defaults assume 3307 for DB and 8181 for HTTP).”
+- WordPress git/SSH: “Do we already have SSH aliases and bare repos? If not, should I create an alias (e.g., `wp-prod`), `git init` in the project root (not the webroot), and set up a bare repo under `~/git/` so `.git/` never lives in the public directory?”
 - Env loading: “Should I create `.env.local` from `.env.example` and, if using direnv, write `.envrc` with `dotenv .env.local`?”
 - ETL env checks: “Do you want to enforce env vars? If so, I’ll set `REQUIRED_ENV` in the Makefile (e.g., `POSTGRES_DSN RENDER_PG_URL …`).”
 - Tests: “Enable Node tests by adding `\"test\": \"node --test\"` to `package.json`? Install pytest for Python tests?”
@@ -45,3 +46,11 @@ Safety & Style
 - Prefer Makefile and VS Code tasks over ad-hoc commands.
 - Keep changes minimal; ask before destructive actions (rename/install). 
 - Document decisions in `docs/state.md` when applied to a real project.
+
+## WordPress Git/SSH Setup Checklist
+- **Local repo:** run `git init` in the project root (keep `.git/` out of the public webroot), add the WordPress ignore patterns from the template, then commit and push to GitHub.
+- **SSH alias:** add a host entry such as `wp-prod` in `~/.ssh/config` so `ssh wp-prod` lands in the production account.
+- **Server bare repo:** on the host, create `~/git/` and run `git init --bare ~/git/<project>.git`. Leave the live `public_html`/webroot untouched so `.git/` never lives there.
+- **Configure remotes:** locally run `git remote add prod ssh://wp-prod/~/git/<project>.git`. Stay on a `site/` subtree (or similar) so only deployable files push to production.
+- **Deploy alias:** configure the `git deploy` alias (supports `--dry-run`, `--progress`) to run a subtree push followed by a remote `git checkout -f`. Test with `git deploy --dry-run --progress prod` before doing the real push.
+- **First publish:** after a successful dry run, run `git deploy --progress prod`, then verify the site before further work.
