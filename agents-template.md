@@ -59,7 +59,8 @@ This repository also includes a machine-readable configuration file:
   - Use a local dev environment (e.g. Local WP, Docker, or MAMP).  
   - Do not modify files directly on production servers. Sync or export/import changes only after testing locally.
   - Keep the WordPress install inside a dedicated subfolder (for example `site/`) so repo tooling/doc files stay at the root and subtree-style deploys are simpler.
-  - If you copy the provided Docker stack (`docker-compose.yml` + `docker/nginx/default.conf`), adjust environment variables, passwords, and exposed ports (defaults assume 3307/8181; pick unused values).
+- If you copy the provided Docker stack (`docker-compose.yml` + `docker/nginx/default.conf`), adjust environment variables, passwords, and exposed ports (defaults assume 3307/8181; pick unused values).
+  - If you copy the provided Docker stack (`docker-compose.yml` + `docker/nginx/default.conf`), adjust container names, environment variables, passwords, and exposed ports (defaults assume `wordpress/wordpress_pass`, 3307, and 8181; rename as needed).
   - Update any scripts copied from `scripts/wp/` (SSH hostnames, database names/passwords, etc.) before running them.
 
 - **Evidence projects (Svelte-based)**:

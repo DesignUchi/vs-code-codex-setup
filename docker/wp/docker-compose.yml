@@ -1,13 +1,13 @@
 services:
   db:
     image: mysql:8.0
-    container_name: flw-db
+    container_name: wp-db
     restart: unless-stopped
     environment:
-      MYSQL_DATABASE: flw_wp
-      MYSQL_USER: flw_wp
-      MYSQL_PASSWORD: flw_wp_pass
-      MYSQL_ROOT_PASSWORD: flw_root_pass
+      MYSQL_DATABASE: wordpress
+      MYSQL_USER: wordpress
+      MYSQL_PASSWORD: wordpress_pass
+      MYSQL_ROOT_PASSWORD: mysql_root_pass
     ports:
       - "3307:3306"
     volumes:
@@ -21,18 +21,18 @@ services:
 
   wordpress:
     image: wordpress:6.6.1-php8.2-apache
-    container_name: flw-mainsite
+    container_name: wp-mainsite
     depends_on:
       - db
     restart: unless-stopped
     environment:
       WORDPRESS_DB_HOST: db:3306
-      WORDPRESS_DB_NAME: flw_wp
-      WORDPRESS_DB_USER: flw_wp
-      WORDPRESS_DB_PASSWORD: flw_wp_pass
-      WP_LOCAL_DB_NAME: flw_wp
-      WP_LOCAL_DB_USER: flw_wp
-      WP_LOCAL_DB_PASSWORD: flw_wp_pass
+      WORDPRESS_DB_NAME: wordpress
+      WORDPRESS_DB_USER: wordpress
+      WORDPRESS_DB_PASSWORD: wordpress_pass
+      WP_LOCAL_DB_NAME: wordpress
+      WP_LOCAL_DB_USER: wordpress
+      WP_LOCAL_DB_PASSWORD: wordpress_pass
       WP_LOCAL_DB_HOST: db
     volumes:
       - ./site:/var/www/html
@@ -41,7 +41,7 @@ services:
 
   proxy:
     image: nginx:alpine
-    container_name: flw-proxy
+    container_name: wp-proxy
     depends_on:
       - wordpress
     restart: unless-stopped
@@ -60,12 +60,12 @@ services:
     user: "33:33"
     environment:
       WORDPRESS_DB_HOST: db:3306
-      WORDPRESS_DB_NAME: flw_wp
-      WORDPRESS_DB_USER: flw_wp
-      WORDPRESS_DB_PASSWORD: flw_wp_pass
-      WP_LOCAL_DB_NAME: flw_wp
-      WP_LOCAL_DB_USER: flw_wp
-      WP_LOCAL_DB_PASSWORD: flw_wp_pass
+      WORDPRESS_DB_NAME: wordpress
+      WORDPRESS_DB_USER: wordpress
+      WORDPRESS_DB_PASSWORD: wordpress_pass
+      WP_LOCAL_DB_NAME: wordpress
+      WP_LOCAL_DB_USER: wordpress
+      WP_LOCAL_DB_PASSWORD: wordpress_pass
       WP_LOCAL_DB_HOST: db
     volumes:
       - ./site:/var/www/html
